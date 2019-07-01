@@ -1,3 +1,71 @@
 li {
     color: green;
 }
+
+.image {
+  position:relative;
+  width:100%;
+}
+
+#card1 {
+  position:absolute;
+  top:20px;
+  left:85px;
+  width:100%;
+  line-height:20px;
+  opacity:.7;
+}
+
+#card2 {
+  position:absolute;
+  top:20px;
+  left:290px;
+  width:100%;
+  margin=0;
+   line-height:20px;
+  opacity:.7;
+}
+
+#main {
+  position:absolute;
+  top:20px;
+  left:160px;
+  width:100%;
+  margin:0;
+   line-height:30px;
+  opacity:.7;
+}
+
+#settings {
+  margin:0;
+}
+
+body {
+  background-size: cover;
+  background-repeat:no-repeat;
+}
+
+#back {
+  float:left;
+  position:relative;
+  z-index:99;
+}
+
+#search {
+ right:30px;
+}
+
+#chart {
+  background-color= #FF6347
+}
+
+#alert {
+  top:25%;
+  left:0%;
+  height:100%;
+  background-color:transparent;
+}
+
+p {
+  margin=0;
+}

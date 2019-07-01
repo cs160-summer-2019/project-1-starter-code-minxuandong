@@ -3,13 +3,146 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Comparison</title>
-	
-	<link rel="stylesheet" type="text/css" href="{% static 'weather/vendors/bootstrap/css/bootstrap.css' %}" />
+	<title>Forecast</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  
+  
+  <link rel="stylesheet" type="text/css" href="{% static 'weather/vendors/bootstrap/css/bootstrap.css' %}" />
 	<link rel="stylesheet" type="text/css" href="{% static 'weather/css/style.css' %}" />
+  
 
 </head>
-<body>
-	<!-- your comparison interface here -->
+  
+<body class ="text-center" background="/static/weather/assets/clouds.jpg"> <!––https://unsplash.com/photos/yQorCngxzwI -->
+	<!-- your single-location forecast interface here -->
+     <div class="container">
+  <div class="row-md input-group">
+    <input id="search" list = "cities" type="text" placeholder="enter city..." style="font-size:30pt">
+    <datalist id="cities">
+      <option value="Berkeley, CA"></option>
+      <option value="Bakersfield, CA"></option>
+      <option value="Baltimore, MD"></option>
+      <option value="Boston, MA"></option>
+      <option value="Buffalo, NY"></option>
+    </datalist>
+    
+    <button type="button" id ="settings" class="btn btn-primary" style="height:70px; border=0px">
+      <img src="/static/weather/assets/settings.png"  height=50> <!-- https://www.flaticon.com/free-icon/settings-work-tool_70367#term=settings&page=1&position=2-->
+    </button>
+  </div>
+  <div class="row-md">
+    <button id="back" class="btn btn-secondary" style="float:left" onclick="location.href='/weather/forecast/'">
+      <img src="/static/weather/assets/back.png" width=20 height=20> <!-- https://www.flaticon.com/free-icon/back-arrow_340#term=back&page=1&position=96 -->
+    </button>
+    <div class="dropdown">
+    <button id="date" type="button" class="btn btn-dark btn-lg dropdown-toggle" data-toggle="dropdown">
+      Tuesday, June 25
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">Wednesday, June 26</a> 
+      <a class="dropdown-item" href="#">Thursday, June 27</a> 
+      <a class="dropdown-item" href="#">Friday, June 28</a> 
+      <a class="dropdown-item" href="#">Saturday, June 29</a> 
+      <a class="dropdown-item" href="#">Sunday, June 30</a> 
+      <a class="dropdown-item" href="#">Monday, July 1</a> 
+    </div>
+    </div>
+       </div>
+  <div class="row-md">
+      <div class="col">
+        <img src="/static/weather/assets/sunny.png" width="40%" height="40%"/> <!-- https://www.flaticon.com/free-icon/sunny_136723 -->
+        <div class="card text-white bg-info" id="card1" style="width:30%">
+          <div class="card-header">
+            Berkeley, CA
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+              3:00PM<br>68&deg;F<br>
+              <img src="/static/weather/assets/precipitation.png" width="10" height="10"/> 10%<br> <!-- https://www.flaticon.com/free-icon/rain_131041#term=rainy&page=1&position=4 -->
+              <img src="/static/weather/assets/humidity.png" width="10" height="10"/> 58%<br><!-- https://www.flaticon.com/free-icon/humidity_219816 -->
+              <img src="/static/weather/assets/wind.png" width="10" height="10"/> 14 mi/h<br><!--https://www.flaticon.com/free-icon/breeze_809188#term=wind&page=1&position=13 -->
+            </p>
+          </div>
+        </div>
+        
+        <img src="/static/weather/assets/sunny.png" width="40%" height="40%"/> <!-- https://www.flaticon.com/free-icon/sunny_136723 -->
+        <div class="card text-white bg-success" id="card2" style="width:30%">
+          <div class="card-header">
+            Phoenix, AZ
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+              3:00PM<br>95&deg;F<br>
+              <img src="/static/weather/assets/precipitation.png" width="10" height="10"/> 0%<br> <!-- https://www.flaticon.com/free-icon/rain_131041#term=rainy&page=1&position=4 -->
+              <img src="/static/weather/assets/humidity.png" width="10" height="10"/> 10%<br> <!-- https://www.flaticon.com/free-icon/humidity_219816 -->
+              <img src="/static/weather/assets/wind.png" width="10" height="10"/> 0 mi/h<br> <!--https://www.flaticon.com/free-icon/breeze_809188#term=wind&page=1&position=13 -->
+            </p>
+          </div>
+        </div>
+      </div>
+  </div>
+    <div class="row-md">
+       <canvas id="chart" height="130%"></canvas>
+    </div>
+   <div class="row-md">
+     <button type="button" class="btn btn-dark btn-lg">
+       Add to home
+     </button>
+     <button type="button" class="btn btn-dark btn-lg">
+       Compare location
+     </button>
+   </div>
+    
+  <script> //https://tobiasahlin.com/blog/chartjs-charts-to-get-you-started/
+window.onload = function () {
+
+new Chart(document.getElementById("chart"), {
+  type: 'line',
+  responsive:true,
+  maintainAspectRatio:false,
+  data: {
+    labels: ["12PM", "1PM", "2PM", "3PM"],
+    datasets: [{ 
+        data: [68, 70, 68, 65],
+        label: "Berkeley, CA",
+        fontColor:"red",
+        borderColor: "#17a2b8",
+      }, { 
+        data: [95, 98, 101, 98],
+        label: "Phoenix, AZ",
+        fontColor:"blue",
+        borderColor: "#28a745",
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      fontColor:"white",
+      text: 'Hourly Temperature'
+    }
+  }
+});
+   Chart.defaults.global.defaultFontColor='black';
+
+}
+</script>
+    <script type="text/javascript"> 
+      var textfield = document.getElementById("search");
+      textfield.addEventListener("keyup", function(char) {
+        //if (char.keycode == 13) {
+          location.href="/weather/comparison/";
+        //}
+      });
+  </script>
+       </div>
 </body>
 </html>
+
+
+
+
+

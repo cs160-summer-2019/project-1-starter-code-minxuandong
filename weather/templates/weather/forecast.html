@@ -4,13 +4,98 @@
 <html>
 <head>
 	<title>Forecast</title>
-	
-	<link rel="stylesheet" type="text/css" href="{% static 'weather/vendors/bootstrap/css/bootstrap.css' %}" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'weather/vendors/bootstrap/css/bootstrap.css' %}" />
 	<link rel="stylesheet" type="text/css" href="{% static 'weather/css/style.css' %}" />
+  
 
 </head>
-<body>
+<body class="text-center" background="/static/weather/assets/clouds.jpg"> <!––//background is https://unsplash.com/photos/yQorCngxzwI -->
+  <div class="container">
+    
+    
 	<!-- your single-location forecast interface here -->
+  <div class="row-md input-group">
+    <input id="search" class="input-append" list = "cities" type="text" placeholder="enter city..." style="font-size:30pt">
+    <datalist id="cities">
+      <option value="Berkeley, CA"></option>
+      <option value="Bakersfield, CA"></option>
+      <option value="Baltimore, MD"></option>
+      <option value="Boston, MA"></option>
+      <option value="Buffalo, NY"></option>
+    </datalist>
+    
+    <button type="button" id ="settings" class="btn btn-primary" style="height:70px; border=0px">
+      <img src="/static/weather/assets/settings.png"  height=50> <!-- https://www.flaticon.com/free-icon/settings-work-tool_70367#term=settings&page=1&position=2-->
+    </button>
+  </div>
+  <div class="row-md">
+      <div class="col">
+        <div class="col">
+        <img src="/static/weather/assets/sunny.png" width="40%" height="40%"/> <!-- https://www.flaticon.com/free-icon/sunny_136723 -->
+        <div class="card text-white bg-info" id="main" style="width:35% ">
+          <div class="card-header">
+            Phoenix, AZ
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+              3:00PM<br>Tuesday, June 25<br>68&deg;F
+            </p>
+          </div>
+        </div>
+          
+      </div>
+      <div class="col">
+      </div>
+  </div>
+  
+  
+  <div class="row-md">
+    <table id="table" class="table table-striped table-primary">
+      <tbody>
+        <tr>
+          <td>Berkeley, CA<br>3:00 PM</td>
+          <td><h1>
+            68 &deg;F
+            </h1></td>
+          <td>
+            <img src="/static/weather/assets/sunny.png" alt="help" width=50 height=50/> <!-- https://www.flaticon.com/free-icon/sunny_136723 -->
+          </td>
+        </tr>
+        <tr>
+          <td>New York City, NY<br>6:00 PM</td>
+          <td><h1>
+            58 &deg;F
+            </h1></td>
+          <td>
+            <img src="/static/weather/assets/cloudy.jpg" alt="help" width=50 height=50/> <!-- http://chittagongit.com/icon/weather-sun-icon-4.html -->
+        </tr>
+        <tr>
+          <td>San Francisco, CA<br>3:00 PM</td>
+          <td><h1>
+            66 &deg;F
+            </h1></td>
+          <td>
+            <img src="/static/weather/assets/sunny.png" alt="help" width=50 height=50/> <!-- https://www.flaticon.com/free-icon/sunny_136723 -->
+          </td>
+        </tr>
+      </tbody>
+    </table>    
+  </div>
+  <script type="text/javascript"> //idea is borrowed from: https://itsolutionstuff.com/post/jquery-draggable-sortable-table-rows-example-demo-with-bootstrapexample.html
+    $('tbody').sortable();
+  </script>
+    <script type="text/javascript"> 
+      var textfield = document.getElementById("search");
+      textfield.addEventListener("keyup", function(char) {
+        //if (char.keycode == 13) {
+          location.href="/weather/comparison/";
+        //}
+      });
+  </script>
+    </div>
 </body>
 </html>
 
